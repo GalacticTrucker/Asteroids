@@ -13,6 +13,9 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Asteroids")
+    game_clock = pygame.time.Clock()
+    dt = 0
 
     running = True
     while running:
@@ -22,7 +25,7 @@ def main():
 
         screen.fill((0, 0, 0))  # Fill the screen with black
         pygame.display.flip()   # Update the display
-
+        dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time
 
 if __name__ == "__main__":
     main()
