@@ -52,6 +52,11 @@ def main():
         for d in drawable:
             d.draw(screen)
 
+        for a in asteroids:
+            if player.check_collision(a):
+                print("Game over!")
+                running = False
+
         pygame.display.flip()   # Update the display
         dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time
 

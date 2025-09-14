@@ -5,40 +5,41 @@ from constants import *
 
 
 class AsteroidField(pygame.sprite.Sprite):
+    # edges for spawning asteroids
     edges = [
         [
             pygame.Vector2(1, 0),
-            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT),
+            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT), # left edge
         ],
         [
             pygame.Vector2(-1, 0),
             lambda y: pygame.Vector2(
-                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT
+                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT # right edge
             ),
         ],
         [
             pygame.Vector2(0, 1),
-            lambda x: pygame.Vector2(x * SCREEN_WIDTH, -ASTEROID_MAX_RADIUS),
+            lambda x: pygame.Vector2(x * SCREEN_WIDTH, -ASTEROID_MAX_RADIUS), # top edge
         ],
         [
             pygame.Vector2(0, -1),
             lambda x: pygame.Vector2(
-                x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
+                x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS # bottom edge
             ),
         ],
     ]
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.spawn_timer = 0.0
+        self.spawn_timer = 0.0 # time since last spawn
 
     def spawn(self, radius, position, velocity):
         asteroid = Asteroid(position.x, position.y, radius)
         asteroid.velocity = velocity
 
     def update(self, dt):
-        self.spawn_timer += dt
-        if self.spawn_timer > ASTEROID_SPAWN_RATE:
+        self.spawn_timer += dt # increment spawn timer
+        if self.spawn_timer > ASTEROID_SPAWN_RATE: # time to spawn a new asteroid
             self.spawn_timer = 0
 
             # spawn a new asteroid at a random edge
