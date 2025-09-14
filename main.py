@@ -32,9 +32,11 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+        player.update(dt)
+
         screen.fill((0, 0, 0))
         player.draw(screen)
-        
+
         pygame.display.flip()   # Update the display
         dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time
 
