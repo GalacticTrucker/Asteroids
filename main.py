@@ -2,6 +2,8 @@ from constants import *
 from player import Player, Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from score import Score
+
 import pygame
 
 # this allows us to use code from
@@ -41,6 +43,10 @@ def main():
     # Shooting setup
     Shot.containers = (shots, updatable, drawable)
 
+    # Score setup 
+    #Score.containers = (updatable, drawable)
+    game_score = Score()
+
     # Main game loop
     running = True
     while running:
@@ -56,14 +62,21 @@ def main():
         for d in drawable:
             d.draw(screen)
 
+        # Could not figure out why it was not drawing before with containers and "d in drawable", asked chatgpt but it just messed up code more and more
+        # simpler to just draw here
+        game_score.draw(screen) 
+
         for asteroid in asteroids:
             if player.check_collision(asteroid):
                 print("Game over!")
+                print(f"Final score: {game_score.player_score}")
                 running = False
             for shot in shots:
                 if shot.check_collision(asteroid):
                     asteroid.split()
-                    shot.kill()    
+                    shot.kill()
+                    game_score.player_score += 100
+  
 
         pygame.display.flip()   # Update the display
         dt = game_clock.tick(60) / 1000  # Limit to 60 FPS and get delta time

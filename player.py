@@ -20,7 +20,7 @@ class Player(CircleShape):
         if self.shoot_cooldown > 0:
             return  # Still in cooldown, cannot shoot
         self.shoot_cooldown = PLAYER_SHOOT_COOLDOWN
-        
+
         # Calculate the position at the tip of the triangle
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         tip_position = self.position + forward * self.radius
